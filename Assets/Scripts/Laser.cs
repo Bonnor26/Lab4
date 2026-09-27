@@ -1,23 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
+[DebuggerDisplay("{" + nameof(GetDebuggerDisplay) + "(),nq}")]
 public class Laser : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private float speed = 8f;
+    [SerializeField] private float destroyAboveY = 11f;
+
+    private void Update()
     {
-        
+        transform.Translate(Vector3.up * Time.deltaTime * speed);
+
+        if (transform.position.y > destroyAboveY)
+        {
+            Destroy(gameObject);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private string GetDebuggerDisplay()
     {
-        transform.Translate(Vector3.up * Time.deltaTime * 8f);
-
-        if (transform.position.y > 11f)
-        {
-            Destroy(this.gameObject);
-        }
+        return ToString();
     }
 }

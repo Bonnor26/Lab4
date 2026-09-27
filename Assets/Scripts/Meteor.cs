@@ -1,39 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-public class Meteor : MonoBehaviour
+public class Meteor : EnemyBase
 {
-    
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
+        fallSpeed = 2f;
+        hitsToDestroy = 1;
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void OnDestroyedByLaser()
     {
-        transform.Translate(Vector3.down * Time.deltaTime * 2f);
-
-        if (transform.position.y < -11f)
-        {
-            Destroy(this.gameObject);
-        }
+        base.OnDestroyedByLaser();
+        GameEvents.RaiseRegularMeteorDestroyed();
     }
 
-    private void OnTriggerEnter2D(Collider2D whatIHit)
+    protected override void OnPlayerCollision()
     {
-        if (whatIHit.tag == "Player")
-        {
-            GameObject.Find("GameManager").GetComponent<GameManager>().gameOver = true;
-            Destroy(whatIHit.gameObject);
-            Destroy(this.gameObject);
-        } else if (whatIHit.tag == "Laser")
-        {
-            GameObject.Find("GameManager").GetComponent<GameManager>().meteorCount++;
-            Destroy(whatIHit.gameObject);
-            Destroy(this.gameObject);
-        }
+        Destroy(gameObject);
     }
 }
+
