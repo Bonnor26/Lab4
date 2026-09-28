@@ -191,6 +191,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 010f2fa28ed11944fb5411d450a485cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  laserPrefab: {fileID: 0}
+  laserPrefab: {fileID: 5506627125660967038, guid: 1a8162fa00c811a43904a4f611676905, type: 3}
   cooldownSeconds: 1
   muzzleOffset: {x: 0, y: 1, z: 0}

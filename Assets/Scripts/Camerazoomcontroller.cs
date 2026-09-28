@@ -1,16 +1,28 @@
 using UnityEngine;
+using Unity.Cinemachine;
 
-public class Camerazoomcontroller : MonoBehaviour
+[RequireComponent(typeof(CinemachineImpulseSource))]
+public class CameraShakeTrigger : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private CinemachineImpulseSource impulseSource;
+
+    private void Awake()
     {
-        
+        impulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        GameEvents.AsteroidDestroyed += Shake;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.AsteroidDestroyed -= Shake;
+    }
+
+    private void Shake()
+    {
+        impulseSource.GenerateImpulse();
     }
 }

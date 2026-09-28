@@ -7,9 +7,11 @@ public static class GameEvents
     public static event Action RegularMeteorDestroyed;
     public static event Action AsteroidDestroyed;
     public static event Action BigMeteorSpawned;
+    public static event Action BigMeteorDestroyed;
 
     public static void RaisePlayerDied() => PlayerDied?.Invoke();
     public static void RaiseRegularMeteorDestroyed() => RegularMeteorDestroyed?.Invoke();
     public static void RaiseAsteroidDestroyed() => AsteroidDestroyed?.Invoke();
     public static void RaiseBigMeteorSpawned() => BigMeteorSpawned?.Invoke();
+    public static void RaiseBigMeteorDestroyed() => BigMeteorDestroyed?.Invoke();
 }
