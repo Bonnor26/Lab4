@@ -1,44 +1,27 @@
-using System.Collections;
 using UnityEngine;
-using Unity.Cinemachine; // change to "using Cinemachine;" if on Cinemachine 2.x
-
-
-public class CameraZoomController : MonoBehaviour
+using Unity.Cinemachine; 
+[RequireComponent(typeof(CinemachineImpulseSource))]
+public class CameraShakeTrigger : MonoBehaviour
 {
-    [SerializeField] private CinemachineCamera virtualCamera;
-    [SerializeField] private float normalSize = 5f;
-    [SerializeField] private float zoomedOutSize = 8f;
-    [SerializeField] private float zoomDuration = 0.5f;
+    private CinemachineImpulseSource impulseSource;
 
-    private Coroutine zoomRoutine;
+    private void Awake()
+    {
+        impulseSource = GetComponent<CinemachineImpulseSource>();
+    }
 
     private void OnEnable()
     {
-        GameEvents.BigMeteorSpawned += ZoomOut;
+        GameEvents.AsteroidDestroyed += Shake;
     }
 
     private void OnDisable()
     {
-        GameEvents.BigMeteorSpawned -= ZoomOut;
+        GameEvents.AsteroidDestroyed -= Shake;
     }
 
-    private void ZoomOut()
+    private void Shake()
     {
-        if (zoomRoutine != null) StopCoroutine(zoomRoutine);
-        zoomRoutine = StartCoroutine(LerpZoom(zoomedOutSize));
-    }
-
-    private IEnumerator LerpZoom(float target)
-    {
-        float start = virtualCamera.Lens.OrthographicSize;
-        float t = 0f;
-        while (t < zoomDuration)
-        {
-            t += Time.deltaTime;
-            var lens = virtualCamera.Lens;
-            lens.OrthographicSize = Mathf.Lerp(start, target, t / zoomDuration);
-            virtualCamera.Lens = lens;
-            yield return null;
-        }
+        impulseSource.GenerateImpulse();
     }
 }
